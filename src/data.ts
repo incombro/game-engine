@@ -102,7 +102,7 @@ export class PlayerSpace {
     const garlandAarray = new Array<{ id: number }>()
     const distanceAarray = this.#distance;
 
-    const shadowDots: Map<number, boolean> = new Map<number, boolean>();
+    const shadowDots = new Map<number, boolean>();
 
     const prepareLine = (
       sourceLine: Array<number | undefined>,
