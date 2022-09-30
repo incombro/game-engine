@@ -102,18 +102,22 @@ export class PlayerSpace {
     const garlandAarray = new Array<{ id: number }>()
     const distanceAarray = this.#distance;
 
-    const shadowDots: Array<number> = new Array<number>();
+    const shadowDots: Map<number, boolean> = new Map<number, boolean>();
 
     const prepareLine = (
       sourceLine: Array<number | undefined>,
-      shadow: Array<number>,
+      shadow: Map<number, boolean>,
     ): Array<number | undefined> | undefined => {
-      if (sourceLine.length - shadow.length < 2) {
+
+      if (sourceLine.length - shadow.size < 2) {
         return undefined;
       }
-      const filtredLine = new Array<number | undefined>(sourceLine.length).fill(undefined);
+
+      const filtredLine = new Array<number | undefined>(sourceLine.length)
+        .fill(undefined);
+
       sourceLine.map((value, id) => {
-        if (shadow.findIndex((el) => el === id) !== -1) {
+        if (shadow.has(id)) {
           return filtredLine[id] = undefined;
         }
         return filtredLine[id] = value;
@@ -121,13 +125,16 @@ export class PlayerSpace {
       return filtredLine;
     }
 
-    const prepareArray = (sourceArray: Array<Array<number | undefined> | undefined>, shadow: Array<number>) => {
+    const prepareArray = (
+      sourceArray: Array<Array<number | undefined> | undefined>,
+      shadow: Map<number, boolean>,
+    ) => {
 
-      const filtredArray: Array<Array<number | undefined> | undefined> =
-        new Array<Array<number | undefined> | undefined>(sourceArray.length).fill(undefined);
+      const filtredArray = new Array<Array<number | undefined> | undefined>(sourceArray.length)
+        .fill(undefined);
 
       sourceArray.map((value, id) => {
-        if (shadow.findIndex((el) => el == id) !== -1) {
+        if (shadow.has(id)) {
           return filtredArray[id] = undefined;
         }
         if (value) {
@@ -139,7 +146,12 @@ export class PlayerSpace {
       return filtredArray;
     }
 
-    shadowDots.push(1, 2, 3, 4, 5);
+    shadowDots.set(0, true);
+    shadowDots.set(1, true);
+    shadowDots.set(2, true);
+    // shadowDots.set(3, true);
+    shadowDots.set(4, true);
+    shadowDots.set(5, true);
 
     const resArray = prepareArray(distanceAarray, shadowDots);
 
