@@ -107,7 +107,10 @@ export class PlayerSpace {
     const prepareLine = (
       sourceLine: Array<number | undefined>,
       shadow: Array<number>,
-    ): Array<number | undefined> => {
+    ): Array<number | undefined> | undefined => {
+      if (sourceLine.length - shadow.length < 2) {
+        return undefined;
+      }
       const filtredLine = new Array<number | undefined>(sourceLine.length).fill(undefined);
       sourceLine.map((value, id) => {
         if (shadow.findIndex((el) => el === id) !== -1) {
@@ -136,7 +139,7 @@ export class PlayerSpace {
       return filtredArray;
     }
 
-    shadowDots.push(1, 2, 5);
+    shadowDots.push(1, 2, 3, 4, 5);
 
     const resArray = prepareArray(distanceAarray, shadowDots);
 
