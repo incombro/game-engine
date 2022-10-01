@@ -2,7 +2,7 @@ import console from 'node:console';
 
 import {
   PlayerSpace,
-} from './data.js';
+} from './data/index.js';
 
 const playerSpace = new PlayerSpace();
 
