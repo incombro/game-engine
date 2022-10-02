@@ -1,7 +1,8 @@
 import {
+  Distances,
   prepareArray,
   distanceArrayInit,
-  Distances,
+  setDistance,
 } from './distance.js';
 
 import {
@@ -101,19 +102,8 @@ export class PlayerSpace {
               secondPlayer.coordinate,
             );
 
-            if (Array.isArray(this.#distance[first]) === true) {
-              this.#distance[first]![second] = distance;
-            } else {
-              this.#distance[first] = [];
-              this.#distance[first]![second] = distance;
-            }
-
-            if (Array.isArray(this.#distance[second]) === true) {
-              this.#distance[second]![first] = distance;
-            } else {
-              this.#distance[second] = [];
-              this.#distance[second]![first] = distance;
-            }
+            setDistance(this.#distance[first], second, distance);
+            setDistance(this.#distance[second], first, distance);
 
             // console.log("ALL DISTANCE", { first, second }, this.#distance);
 
