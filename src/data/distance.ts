@@ -1,19 +1,25 @@
 export type DistanceLine = Array<number | undefined>;
-export type Distances = Array<DistanceLine>;
+export type Distances = DistanceLine[];
 export type DistancesArrayFiltred = Array<DistanceLine | undefined>
 
-export const distanceArrayInit: (count: number) => Distances = (count) => Array.from({ length: count }, () => (new Array<number | undefined>(count).fill(undefined)));
+export const distanceArrayInit: (count: number) =>
+  Distances = (count) => {
+    return Array.from({ length: count }, () =>
+      (Array<number | undefined>(count).fill(undefined)))
+  };
+
+export type ShadowUser = Map<number, boolean>;
 
 export const prepareLine = (
   sourceLine: DistanceLine,
-  shadow: Map<number, boolean>,
+  shadow: ShadowUser,
 ): Array<number | undefined> | undefined => {
 
   if (sourceLine.length - shadow.size < 2) {
     return undefined;
   }
 
-  const filtredLine = new Array<number | undefined>(sourceLine.length)
+  const filtredLine: DistanceLine = Array<number | undefined>(sourceLine.length)
     .fill(undefined);
 
   sourceLine.map((value, id) => {
@@ -30,7 +36,7 @@ export const prepareArray = (
   shadow: Map<number, boolean>,
 ) => {
 
-  const filtredArray: DistancesArrayFiltred = new Array(sourceArray.length)
+  const filtredArray: DistancesArrayFiltred = Array<DistanceLine | undefined>(sourceArray.length)
     .fill(undefined);
 
   sourceArray.map((value, id) => {

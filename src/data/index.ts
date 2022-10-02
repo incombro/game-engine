@@ -6,16 +6,19 @@ import {
 
 import {
   Player,
-  PlayerCoordinate,
 } from './player.js';
 
+import {
+  PlayerCoordinate,
+  playerCoordinateDistance,
+} from './playerCoordinate.js';
 
 export class PlayerSpace {
   #players: Player[];
   #lastId: number;
 
   #distance: Distances;
-  #garland: Array<{ id: number }>
+  #garland: { id: number }[]
 
   constructor() {
 
@@ -23,7 +26,7 @@ export class PlayerSpace {
     this.#lastId = 0;
 
     this.#distance = distanceArrayInit(this.playersCount);
-    this.#garland = new Array<{ id: number }>();
+    this.#garland = [];
   }
 
   public get playersCount() {
@@ -56,10 +59,10 @@ export class PlayerSpace {
   }
 
   private recalculateGarland() {
-    const garlandAarray = new Array<{ id: number }>()
+    const garlandAarray: { id: number }[] = []
     const distanceAarray = this.#distance;
 
-    const shadowDots = new Map<number, boolean>();
+    const shadowDots: Map<number, boolean> = new Map();
 
     // shadowDots.set(0, true);
     // shadowDots.set(1, true);
@@ -83,26 +86,38 @@ export class PlayerSpace {
 
       this.distanceInitArray();
 
-      for (let first: number = 0; first < this.#players.length - 1; first++) {
+      for (let first = 0; first < this.#players.length - 1; first++) {
         for (let second: number = first + 1; second < this.#players.length; second++) {
 
-          const distance = PlayerCoordinate.distance(
-            this.#players[first]!["coordinate"],
-            this.#players[second]!["coordinate"],
-          );
+          const firstPlayer = this.#players[first];
+          const secondPlayer = this.#players[second];
 
-          if (typeof this.#distance[first] === 'undefined') {
-            this.#distance[first] = new Array<number>()
+          if (
+            typeof firstPlayer === 'object' &&
+            typeof secondPlayer === 'object'
+          ) {
+            const distance = playerCoordinateDistance(
+              firstPlayer.coordinate,
+              secondPlayer.coordinate,
+            );
+
+            if (Array.isArray(this.#distance[first]) === true) {
+              this.#distance[first]![second] = distance;
+            } else {
+              this.#distance[first] = [];
+              this.#distance[first]![second] = distance;
+            }
+
+            if (Array.isArray(this.#distance[second]) === true) {
+              this.#distance[second]![first] = distance;
+            } else {
+              this.#distance[second] = [];
+              this.#distance[second]![first] = distance;
+            }
+
+            // console.log("ALL DISTANCE", { first, second }, this.#distance);
+
           }
-          if (typeof this.#distance[second] === 'undefined') {
-            this.#distance[second] = new Array<number>();
-          }
-
-          // console.log("ALL DISTANCE", { first, second }, this.#distance);
-
-          this.#distance[first]![second] = distance;
-          this.#distance[second]![first] = distance;
-
         }
       }
       // console.log("ALL DISTANCE", this.#distance);
