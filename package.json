@@ -14,12 +14,17 @@
     "clear": "yarn run clear:tsbuild && yarn run clear:dist",
     "build": "yarn run clear && tsc",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "eslint": "eslint --fix ./src",
     "develop": "nodemon"
   },
   "devDependencies": {
     "@jest/globals": "^29.0.3",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.22",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "@typescript-eslint/scope-manager": "^5.38.1",
+    "@typescript-eslint/typescript-estree": "^5.38.1",
     "eslint": "^8.24.0",
     "eslint-config-universe": "^11.1.0",
     "jest": "^29.0.3",
@@ -28,10 +33,24 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^29.0.2",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.4"
   },
   "dependencies": {
     "tslib": "^2.4.0"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+	  },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ]
   },
   "nodemonConfig": {
     "watch": [
