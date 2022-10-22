@@ -1,7 +1,10 @@
-export type DistanceLineDistance = number | undefined;
-export type DistanceLine = Array<DistanceLineDistance>;
-export type Distances = DistanceLine[];
-export type DistancesArrayFiltred = Array<DistanceLine | undefined>
+import {
+  DistanceLineDistance,
+  DistanceLine,
+  Distances,
+  DistancesArrayFiltred,
+} from './types.js';
+
 export type ShadowUser = Map<number, boolean>;
 
 export const distanceArrayInit: (count: number) =>

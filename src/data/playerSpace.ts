@@ -1,5 +1,8 @@
 import {
   Distances,
+} from './types.js';
+
+import {
   prepareArray,
   distanceArrayInit,
   setDistance,

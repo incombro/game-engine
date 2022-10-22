@@ -5,7 +5,7 @@ import {
 
 export class Player {
 
-#coordiante: PlayerCoordinate;
+  #coordiante: PlayerCoordinate;
   #id: number;
 
   constructor(id: number, coordinate: PlayerCoordinate) {
