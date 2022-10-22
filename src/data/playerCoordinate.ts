@@ -1,5 +1,4 @@
 
-
 export class PlayerCoordinate {
   #x: number
   #y: number

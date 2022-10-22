@@ -5,7 +5,7 @@ import {
 
 export class Player {
 
-  #coordiante: PlayerCoordinate;
+#coordiante: PlayerCoordinate;
   #id: number;
 
   constructor(id: number, coordinate: PlayerCoordinate) {
@@ -26,3 +26,5 @@ export class Player {
   }
 
 }
+
+export type Players = Player[];
