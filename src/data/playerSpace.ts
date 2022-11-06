@@ -1,9 +1,10 @@
 import {
   Distances,
+  Garland,
 } from './types.js';
 
 import {
-  prepareArray,
+  // prepareArray,
   distanceArrayInit,
   setDistance,
 } from './distance.js';
@@ -17,12 +18,16 @@ import {
   playerCoordinateDistance,
 } from './playerCoordinate.js';
 
+import {
+  garlandCalculate,
+} from './garland.js';
+
 export class PlayerSpace {
   #players: Player[];
   #lastId: number;
 
   #distance: Distances;
-  #garland: { id: number }[]
+  #garland: Garland;
 
   constructor() {
 
@@ -63,25 +68,10 @@ export class PlayerSpace {
   }
 
   private recalculateGarland() {
-    const garlandAarray: { id: number }[] = []
     const distanceAarray = this.#distance;
-
-    const shadowDots: Map<number, boolean> = new Map();
-
-    // shadowDots.set(0, true);
-    // shadowDots.set(1, true);
-    shadowDots.set(2, true);
-    shadowDots.set(3, true);
-    shadowDots.set(4, true);
-    // shadowDots.set(5, true);
-
-    console.log("shadowDots:", shadowDots);
-    console.log("garlandAarray:", garlandAarray);
-    console.log("distanceAarray:", distanceAarray);
-
-    const resArray = prepareArray(distanceAarray, shadowDots);
-    console.log("resArray:", resArray);
-
+    const garland = garlandCalculate(distanceAarray);
+    console.log({ garland });
+    return garland;
   }
 
   private recalculateDistnace() {

@@ -3,9 +3,10 @@ import {
   DistanceLine,
   Distances,
   DistancesArrayFiltred,
+  ShadowUser,
+  DotPaire,
+  PareOther,
 } from './types.js';
-
-export type ShadowUser = Map<number, boolean>;
 
 export const distanceArrayInit: (count: number) =>
   Distances = (count) => {
@@ -22,15 +23,13 @@ export const prepareLine = (
     return undefined;
   }
 
-  const filtredLine: DistanceLine = Array<DistanceLineDistance>(sourceLine.length)
-    .fill(undefined);
-
-  sourceLine.map((value, id) => {
+  const filtredLine: Array<DistanceLineDistance> = sourceLine.map((value, id) => {
     if (shadow.has(id)) {
-      return filtredLine[id] = undefined;
+      return undefined;
     }
-    return filtredLine[id] = value;
-  })
+    return value;
+  });
+
   return filtredLine;
 };
 
@@ -39,15 +38,12 @@ export const prepareArray = (
   shadow: Map<number, boolean>,
 ) => {
 
-  const filtredArray: DistancesArrayFiltred = Array<DistanceLine | undefined>(sourceArray.length)
-    .fill(undefined);
-
-  sourceArray.map((value, id) => {
+  const filtredArray: DistancesArrayFiltred = sourceArray.map((value, id) => {
     if (shadow.has(id)) {
-      return filtredArray[id] = undefined;
+      return undefined;
     }
     if (value) {
-      return filtredArray[id] = prepareLine(value, shadow);
+      return prepareLine(value, shadow);
     }
     return undefined;
   });
@@ -64,4 +60,72 @@ export const setDistance = (
     distanceLine = [];
   }
   distanceLine[x] = distance;
+}
+
+export const getPare = (distArr: Distances): DotPaire | undefined => {
+  let pair: DotPaire | undefined = undefined;
+
+  distArr.forEach((valueLine, idLeft) => {
+    if (valueLine !== undefined) {
+      valueLine.forEach((distance, idRight) => {
+        if (distance !== undefined) {
+          if (
+            (pair === undefined) || (
+              (pair !== undefined) &&
+              (pair.distance > distance)
+            )) {
+            pair = {
+              distance,
+              idLeft,
+              idRight,
+            };
+          };
+        };
+      });
+    };
+  });
+  return pair;
+}
+
+
+export const getPareOther = (
+  distArr: Distances,
+  maskIds: Map<number, boolean>,
+  idTarget: number
+): PareOther | undefined => {
+
+  let resPar: PareOther | undefined = undefined;
+
+  const worlLine = distArr[idTarget];
+
+  console.log({
+    maskIds,
+    idTarget,
+  });
+
+  if (worlLine === undefined) {
+    return undefined;
+  }
+
+  worlLine.forEach((distance, id) => {
+
+    if (
+      (maskIds.has(id)) ||
+      (distance === undefined)
+    ) {
+      return;
+    }
+
+    if (
+      (resPar === undefined) &&
+      (distance !== undefined)
+    ) {
+      resPar = {
+        id,
+        distance,
+      };
+    }
+  });
+
+  return resPar;
 }
