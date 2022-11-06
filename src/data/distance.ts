@@ -4,8 +4,8 @@ import {
   Distances,
   DistancesArrayFiltred,
   ShadowUser,
-  DotPaire,
-  PareOther,
+  DisctanceDot,
+  DotPare,
 } from './types.js';
 
 export const distanceArrayInit: (count: number) =>
@@ -62,12 +62,14 @@ export const setDistance = (
   distanceLine[x] = distance;
 }
 
-export const getPare = (distArr: Distances): DotPaire | undefined => {
-  let pair: DotPaire | undefined = undefined;
+export const getPare = (
+  distArr: Distances
+): DisctanceDot | undefined => {
+  let pair: DisctanceDot | undefined = undefined;
 
-  distArr.forEach((valueLine, idLeft) => {
+  distArr.forEach((valueLine, idFirst) => {
     if (valueLine !== undefined) {
-      valueLine.forEach((distance, idRight) => {
+      valueLine.forEach((distance, idSecond) => {
         if (distance !== undefined) {
           if (
             (pair === undefined) || (
@@ -76,8 +78,8 @@ export const getPare = (distArr: Distances): DotPaire | undefined => {
             )) {
             pair = {
               distance,
-              idLeft,
-              idRight,
+              idFirst,
+              idSecond,
             };
           };
         };
@@ -92,16 +94,16 @@ export const getPareOther = (
   distArr: Distances,
   maskIds: Map<number, boolean>,
   idTarget: number
-): PareOther | undefined => {
+): DotPare | undefined => {
 
-  let resPar: PareOther | undefined = undefined;
+  let resPar: DotPare | undefined = undefined;
 
   const worlLine = distArr[idTarget];
 
-  console.log({
-    maskIds,
-    idTarget,
-  });
+  // console.log({
+  //   maskIds,
+  //   idTarget,
+  // });
 
   if (worlLine === undefined) {
     return undefined;
@@ -119,6 +121,16 @@ export const getPareOther = (
     if (
       (resPar === undefined) &&
       (distance !== undefined)
+    ) {
+      resPar = {
+        id,
+        distance,
+      };
+    }
+
+    if (
+      (resPar !== undefined) &&
+      (distance < resPar.distance)
     ) {
       resPar = {
         id,
