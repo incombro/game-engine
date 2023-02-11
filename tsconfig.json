@@ -1,0 +1,17 @@
+{
+  "extends": "./configs/base",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "declarationDir": "./dist/_types",
+    "outDir": "./dist"
+  },
+  "exclude": [
+    "node_modules",
+    "**/__tests__/**/*.ts",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "dist"
+  ]
+}
