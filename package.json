@@ -2,7 +2,7 @@
   "name": "game-engine",
   "version": "0.0.1",
   "description": "Init Engine",
-  "main": "dist/index.js",
+  "main": "index.js",
   "type": "module",
   "repository": "git@github.com:incombro/game-engine.git",
   "author": "Loty Gero <lotgyero@gmail.com>",
@@ -12,13 +12,34 @@
     "clear:tsbuild": "rimraf .tsbuildinfo",
     "clear:dist": "rimraf dist",
     "clear": "yarn run clear:tsbuild && yarn run clear:dist",
-    "build": "yarn run clear && tsc",
+    "build:types": "tsc --project ./tsconfig.types.json",
+    "build:cjs": "tsc --project ./tsconfig.cjs.json",
+    "build:esm": "tsc --project ./tsconfig.esm.json",
+    "build:default": "tsc --project ./tsconfig.json",
+    "build:artefacts": "cp package.json dist/package.json",
+    "build": "yarn run clear && yarn run build:types && yarn run build:cjs && yarn run build:esm && yarn run build:artefacts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "eslint": "eslint --fix ./src",
     "develop": "nodemon",
     "service:install-deps-frozen:development": "yarn install --production=false --frozen-lockfile --network-timeout 1000000",
     "service:install-deps-frozen:production": "yarn install --production=true --frozen-lockfile --network-timeout 100000"
   },
+  "exports": {
+    "./*": {
+      "types": "./_types/*.d.ts",
+      "require": "./_cjs/*.js",
+      "import": "./_esm/*.js",
+      "default": "./_esm/*.js"
+    }
+  },
+  "typesVersions": {
+    ">=4.2": {
+      "*": [
+        "_types/*"
+      ]
+    }
+  },
+  "types": "./index.d.ts",
   "devDependencies": {
     "@jest/globals": "^29.4.2",
     "@types/jest": "^29.4.0",
@@ -36,6 +57,7 @@
     "rimraf": "^4.1.2",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.2",
     "typescript": "^4.9.5"
   },
   "dependencies": {
@@ -73,6 +95,9 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
     "verbose": true,
     "transform": {}
   }
