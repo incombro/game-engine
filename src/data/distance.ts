@@ -81,10 +81,10 @@ export const getPare = (
               idFirst,
               idSecond,
             };
-          };
-        };
+          }
+        }
       });
-    };
+    }
   });
   return pair;
 }

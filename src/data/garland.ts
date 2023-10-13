@@ -35,7 +35,7 @@ export const garlandCalculate = (distanceAarray: Distances): Garland => {
       // console.log('girlandMask.size:', girlandMask.size);
       // console.log('girlandMask:', girlandMask);
 
-      let idFirstNew: DotPare | undefined = getPareOther(
+      const idFirstNew: DotPare | undefined = getPareOther(
         distanceAarray,
         new Map([
           ...girlandMask,
@@ -45,7 +45,7 @@ export const garlandCalculate = (distanceAarray: Distances): Garland => {
         idFirst,
       );
 
-      let idSecondNew: DotPare | undefined = getPareOther(
+      const idSecondNew: DotPare | undefined = getPareOther(
         distanceAarray,
         new Map([
           ...girlandMask,
