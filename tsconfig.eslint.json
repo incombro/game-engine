@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["@types/node"],
+    "noEmit": true,
+    "allowJs": false,
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "declarationDir": "./dist/_types"
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
