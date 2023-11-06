@@ -26,8 +26,9 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "eslint": "eslint --fix ./src",
     "develop": "nodemon",
-    "service:install-deps-frozen:development": "yarn install --production=false --frozen-lockfile --network-timeout 1000000",
-    "service:install-deps-frozen:production": "yarn install --production=true --frozen-lockfile --network-timeout 100000"
+    "service:install-deps-frozen": "yarn install --frozen-lockfile --network-timeout 1000000",
+    "service:install-deps-frozen:development": "yarn run service:install-deps-frozen --production=false",
+    "service:install-deps-frozen:production": "yarn run service:install-deps-frozen --production=true"
   },
   "exports": {
     "./*": {
